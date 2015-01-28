@@ -68,9 +68,9 @@
 ;;    (message "setup-cygwin failed, continue anyway")
 ;;    ))
 
-;;========================== 系统, ui, tab, frame 初始化 ============
+;;========================== os, ui, tab, frame, init  ============
 
-;-- 初始化
+;-- init
 (require 'idle-require)
 (require 'init-elpa)
 (require 'init-exec-path) ;; Set up $PATH
@@ -83,12 +83,12 @@
 (require 'init-spelling)
 (require 'init-flymake)
 
-;-- 系统
+;-- os
 (require 'init-xterm)
 (require 'init-osx-keys)
 (require 'init-proxies)
-;-- frame
 
+;-- frame
 (require 'init-gui-frames)
 (require 'init-maxframe)
 
@@ -96,10 +96,11 @@
 ;; (require 'color-theme)
 ;; (require 'color-theme-molokai)
 ;; (color-theme-molokai)
-(require 'init-themes)
+;; (require 'init-themes)
 (require 'init-powerline)
-(require 'init-moe-theme)
-
+;; (require 'init-moe-theme)
+(require 'init-leuven-theme)
+(powerline-default-theme)
 ;; This line must be after color-theme-molokai! Don't know why.
 (setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
 ;; (color-theme-select 'color-theme-xp)
@@ -108,11 +109,12 @@
 ;-- fonts
 (require 'init-fonts)
 
-(set-default-font "-apple-PragmataPro-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1")
+(set-default-font "-apple-PragmataPro-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 ;; (set-default-font "PragmataPro-15")
 ;;
-;;(set-fontset-font "fontset-default" 'gb18030' ("STHeiti" . "unicode-bmp"))
-(set-fontset-font "fontset-default" 'gb18030' ("Heiti SC" . "unicode-bmp"))
+;; (set-fontset-font "fontset-default" 'gb18030' ("STHeiti" . "unicode-bmp"))
+
+(if *is-cocoa-emacs* (set-fontset-font "fontset-default" 'gb18030' ("Heiti SC" . "unicode-bmp")))
 ;; (set-fontset-font "fontset-default" 'utf8' ("Heiti SC" . "unicode-bmp"))
 
 ;-- window
@@ -126,10 +128,17 @@
 (require 'init-sessions)
 (require 'init-workgroups2)
 
+;-- server,  Allow access from emacsclient
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
-;;=========================== 核心编辑 ==========================
 
-;-- complete 和编辑界面
+
+
+;;=========================== core editing ==========================
+
+;-- complete and editing ui
 (require 'init-ido)
 (require 'init-recentf)
 (require 'init-smex)
@@ -150,12 +159,12 @@
 ;-- move, search , select, copy, paste, editing
 (require 'init-ace-jump-mode)
 (require 'init-isearch)
-;; (require 'init-editing-utils)
 ;; use evil mode (vi key binding)
 (require 'init-evil)
 
 ;; misc has some crucial tools I need immediately
 (require 'init-misc)
+;; (require 'init-editing-utils)
 
 ;-- org & writing
 (require 'init-textile)
@@ -169,12 +178,12 @@
 
 ;;=================== dev environment =========
 
-;--  目录
+;--  directory
 (require 'init-dired)
 (require 'init-sr-speedbar)
 ;; (require 'init-neotree)
 
-;-- dev base
+;-- git, dash, ctags, eim and some basic dev env settings
 
 (require 'init-git)
 (require 'init-dash)
@@ -185,8 +194,8 @@
 (require 'init-stripe-buffer)
 (require 'init-eim) ;;  cannot be idle-required
 (require 'init-hs-minor-mode)
-;--
-;sh
+
+;shell
 (require 'init-sh)
 (require 'init-term-mode)
 
@@ -194,7 +203,7 @@
 (require 'init-bbdb)
 (require 'init-gnus)
 
-;-- 各个语言 module
+;-- language modules
 ;;lisp
 (require 'init-lisp)
 (require 'init-elisp)
@@ -227,6 +236,9 @@
 ;; (require 'init-sql)
 
 
+
+
+;;==========================================================
 ;;========= finally  ================
 
 (setq idle-require-idle-delay 3)
@@ -239,13 +251,6 @@
                              init-emacs-w3m
                              init-semantic))
 (idle-require-mode 1) ;; starts loading
-
-;;----------------------------------------------------------------------------
-;; Allow access from emacsclient
-;;----------------------------------------------------------------------------
-(require 'server)
-(unless (server-running-p)
-  (server-start))
 
 
 ;;----------------------------------------------------------------------------

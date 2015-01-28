@@ -91,6 +91,7 @@ ARCHIVE is the string name of the package archive.")
 ;; Feel free to add more packages!
 (defvar melpa-include-packages
   '(
+    leuven-theme
     sql-indent
     dash-at-point
     ace-jump-mode
