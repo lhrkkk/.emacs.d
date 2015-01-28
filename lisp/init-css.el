@@ -1,7 +1,7 @@
 ;; Colourise CSS colour literals
 ;; web-mode does not like rainbow-mode
 (autoload 'rainbow-mode "rainbow-mode" nil t)
-(dolist (hook '(css-mode-hook sass-mode-hook))
+(dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
   (add-hook hook 'rainbow-mode))
 
 (defun maybe-flymake-css-load ()

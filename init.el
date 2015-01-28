@@ -35,7 +35,7 @@
 ;----------------------------------------------------------------------------
 ; Load configs for specific features and modes
 ;----------------------------------------------------------------------------
-(require 'init-modeline)
+;; (require 'init-modeline)
 
 ;;----------------------------------------------------------------------------
 ;; Less GC, more memor
@@ -68,93 +68,166 @@
 ;;    (message "setup-cygwin failed, continue anyway")
 ;;    ))
 
-(require 'idle-require)
+;;========================== 系统, ui, tab, frame 初始化 ============
 
+;-- 初始化
+(require 'idle-require)
 (require 'init-elpa)
 (require 'init-exec-path) ;; Set up $PATH
+
+;-- flaymake && complete
+
 (require 'init-frame-hooks)
 ;; any file use flyspell should be initialized after init-spelling.el
 ;; actually, I don't know which major-mode use flyspell.
 (require 'init-spelling)
+(require 'init-flymake)
+
+;-- 系统
 (require 'init-xterm)
 (require 'init-osx-keys)
-(require 'init-gui-frames)
-(require 'init-ido)
-(require 'init-maxframe)
 (require 'init-proxies)
-(require 'init-dired)
-(require 'init-isearch)
-(require 'init-uniquify)
-(require 'init-ibuffer)
-(require 'init-flymake)
-(require 'init-recentf)
-(require 'init-smex)
-(if *emacs24* (require 'init-helm))
-(require 'init-hippie-expand)
-(require 'init-windows)
-(require 'init-sessions)
-(require 'init-fonts)
-(require 'init-git)
-(require 'init-crontab)
-(require 'init-textile)
-(require 'init-markdown)
-(require 'init-csv)
-(require 'init-erlang)
-(require 'init-javascript)
-(when *emacs24*
-  (require 'init-org)
-  (require 'init-org-mime))
-(require 'init-css)
-(require 'init-python-mode)
-(require 'init-haskell)
-(require 'init-ruby-mode)
-(require 'init-lisp)
-(require 'init-elisp)
-(if *emacs24* (require 'init-yasnippet))
-;; Use bookmark instead
-(require 'init-zencoding-mode)
-(require 'init-cc-mode)
-(require 'init-gud)
-(require 'init-cmake-mode)
-(require 'init-csharp-mode)
-(require 'init-linum-mode)
-(require 'init-which-func)
-(require 'init-move-window-buffer)
-;; (require 'init-gist)
-(require 'init-moz)
-(require 'init-gtags)
-;; use evil mode (vi key binding)
-(require 'init-evil)
-(require 'init-sh)
-(require 'init-ctags)
-(require 'init-ace-jump-mode)
-(require 'init-bbdb)
-(require 'init-gnus)
-(require 'init-lua-mode)
-(require 'init-workgroups2)
-(require 'init-term-mode)
-(require 'init-web-mode)
-(require 'init-sr-speedbar)
-(require 'init-slime)
-(when *emacs24* (require 'init-company))
-(require 'init-stripe-buffer)
-(require 'init-eim) ;;  cannot be idle-required
-(require 'init-hs-minor-mode)
-;; need statistics of keyfreq asap
-(require 'init-keyfreq)
-(if *emacs24* (require 'init-projectile))
+;-- frame
 
-;; misc has some crucial tools I need immediately
-(require 'init-misc)
+(require 'init-gui-frames)
+(require 'init-maxframe)
 
-;; color theme
-(require 'color-theme)
-(require 'color-theme-molokai)
-(color-theme-molokai)
+;-- color theme
+;; (require 'color-theme)
+;; (require 'color-theme-molokai)
+;; (color-theme-molokai)
+(require 'init-themes)
+(require 'init-powerline)
+(require 'init-moe-theme)
+
 ;; This line must be after color-theme-molokai! Don't know why.
 (setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
 ;; (color-theme-select 'color-theme-xp)
 ;; (color-theme-xp)
+
+;-- fonts
+(require 'init-fonts)
+
+(set-default-font "-apple-PragmataPro-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1")
+;; (set-default-font "PragmataPro-15")
+;;
+;;(set-fontset-font "fontset-default" 'gb18030' ("STHeiti" . "unicode-bmp"))
+(set-fontset-font "fontset-default" 'gb18030' ("Heiti SC" . "unicode-bmp"))
+;; (set-fontset-font "fontset-default" 'utf8' ("Heiti SC" . "unicode-bmp"))
+
+;-- window
+(require 'init-tabbar)
+;; (require 'init-sublimity)
+;; (require 'init-elscreen)
+(require 'init-move-window-buffer)
+
+;-- session
+(require 'init-windows)
+(require 'init-sessions)
+(require 'init-workgroups2)
+
+
+;;=========================== 核心编辑 ==========================
+
+;-- complete 和编辑界面
+(require 'init-ido)
+(require 'init-recentf)
+(require 'init-smex)
+(require 'init-ibuffer)
+(require 'init-uniquify)
+(if *emacs24* (require 'init-helm))
+(require 'init-hippie-expand)
+(if *emacs24* (require 'init-yasnippet))
+(when *emacs24* (require 'init-company))
+(require 'init-linum-mode)
+
+(require 'init-which-func)
+
+;; need statistics of keyfreq asap
+(require 'init-keyfreq)
+(if *emacs24* (require 'init-projectile))
+
+;-- move, search , select, copy, paste, editing
+(require 'init-ace-jump-mode)
+(require 'init-isearch)
+;; (require 'init-editing-utils)
+;; use evil mode (vi key binding)
+(require 'init-evil)
+
+;; misc has some crucial tools I need immediately
+(require 'init-misc)
+
+;-- org & writing
+(require 'init-textile)
+(require 'init-markdown)
+(when *emacs24*
+  (require 'init-org)
+  (require 'init-org-mime))
+;-- keybinding
+
+
+
+;;=================== dev environment =========
+
+;--  目录
+(require 'init-dired)
+(require 'init-sr-speedbar)
+;; (require 'init-neotree)
+
+;-- dev base
+
+(require 'init-git)
+(require 'init-dash)
+;; (require 'init-gist)
+(require 'init-gtags)
+(require 'init-ctags)
+
+(require 'init-stripe-buffer)
+(require 'init-eim) ;;  cannot be idle-required
+(require 'init-hs-minor-mode)
+;--
+;sh
+(require 'init-sh)
+(require 'init-term-mode)
+
+; email
+(require 'init-bbdb)
+(require 'init-gnus)
+
+;-- 各个语言 module
+;;lisp
+(require 'init-lisp)
+(require 'init-elisp)
+(require 'init-slime)
+;;python
+(require 'init-python-mode)
+(require 'init-ruby-mode)
+(require 'init-haskell)
+;;c
+(require 'init-cc-mode)
+(require 'init-gud)
+(require 'init-cmake-mode)
+; web
+(require 'init-moz)
+(require 'init-javascript)
+(require 'init-css)
+(require 'init-web-mode)
+
+;;other
+(require 'init-crontab)
+(require 'init-csv)
+(require 'init-erlang)
+;;php
+;; Use bookmark instead
+(require 'init-zencoding-mode)
+;;c#
+(require 'init-csharp-mode)
+;;lua
+(require 'init-lua-mode)
+;; (require 'init-sql)
+
+
+;;========= finally  ================
 
 (setq idle-require-idle-delay 3)
 (setq idle-require-symbols '(init-writting
@@ -168,22 +241,45 @@
 (idle-require-mode 1) ;; starts loading
 
 ;;----------------------------------------------------------------------------
+;; Allow access from emacsclient
+;;----------------------------------------------------------------------------
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
+
+;;----------------------------------------------------------------------------
 ;; Variables configured via the interactive 'customize' interface
 ;;----------------------------------------------------------------------------
-(if (file-exists-p "~/.custom.el") (load-file "~/.custom.el"))
+;; (if (file-exists-p "~/.custom.el") (load-file "~/.custom.el"))
 
-(when (require 'time-date nil t)
-   (message "Emacs startup time: %d seconds."
-    (time-to-seconds (time-since emacs-load-start-time)))
-   )
+;; (when (require 'time-date nil t)
+;;    (message "Emacs startup time: %d seconds."
+;;     (time-to-seconds (time-since emacs-load-start-time)))
+;;    )
 
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(window-numbering-face ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold))) t))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(window-numbering-face ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold))) t))
-;;; Local Variables:
-;;; no-byte-compile: t
-;;; End:
-(put 'erase-buffer 'disabled nil)
+;; ;;; Local Variables:
+;; ;;; no-byte-compile: t
+;; ;;; End:
+;; (put 'erase-buffer 'disabled nil)
+;; ; (setq default-cursor-type 'bar)
+;; (workgroups-mode 1)
+;; (wg-reload-session  )				; put this one at the bottom of .emacs

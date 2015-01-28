@@ -88,7 +88,33 @@ ARCHIVE is the string name of the package archive.")
 ;; (setq package-archives '(("myelpa" . "https://raw.github.com/redguardtoo/myelpa/master/")))
 
 (defvar melpa-include-packages
-  '(bbdb
+  '(
+    sql-indent
+    dash-at-point
+    ace-jump-mode
+    multiple-cursors
+    expand-region
+    browse-kill-ring
+    highlight-escape-sequences
+    whole-line-or-region
+    move-dup
+    fill-column-indicator
+    page-break-lines
+    highlight-symbol
+    whitespace-cleanup-mode
+    unfill
+    neotree
+    frame-restore
+    elscreen-persist
+    evil-tabs
+    revive
+    undo-tree
+    workgroups2
+    sublimity
+    elscreen
+    tabbar
+    moe-theme
+    bbdb
     json-rpc
     kv
     color-theme

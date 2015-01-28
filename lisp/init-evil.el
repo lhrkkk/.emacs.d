@@ -98,7 +98,6 @@
 
 (define-key evil-ex-completion-map (kbd "M-p") 'previous-complete-history-element)
 (define-key evil-ex-completion-map (kbd "M-n") 'next-complete-history-element)
-
 (define-key evil-normal-state-map "Y" (kbd "y$"))
 (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
 (define-key evil-normal-state-map "-" 'evil-numbers/dec-at-pt)
@@ -106,6 +105,7 @@
 (define-key evil-normal-state-map (kbd "M-y") 'browse-kill-ring)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
 
 ;; {{ evil-matchit
 (require 'evil-matchit)
@@ -135,6 +135,11 @@
 ;;                           (list evt))))))))
 
 
+
+(define-key evil-insert-state-map (kbd "s-k") 'evil-exit-visual-state)
+(define-key evil-insert-state-map (kbd "s-k") 'evil-normal-state)
+
+
 (define-key evil-insert-state-map (kbd "M-a") 'move-beginning-of-line)
 (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line)
 (define-key evil-insert-state-map (kbd "M-e") 'move-end-of-line)
@@ -144,6 +149,7 @@
 (define-key minibuffer-local-map (kbd "M-k") 'abort-recursive-edit)
 (define-key evil-insert-state-map (kbd "M-j") 'my-yas-expand)
 (define-key evil-emacs-state-map (kbd "M-j") 'my-yas-expand)
+(define-key evil-normal-state-map (kbd "C-e") 'evil-end-of-line)
 (global-set-key (kbd "M-k") 'keyboard-quit)
 (global-set-key (kbd "C-r") 'undo-tree-redo)
 
@@ -193,20 +199,20 @@ to replace the symbol under cursor"
 (setq evil-leader/leader ",")
 
 (require 'evil-leader)
-(evil-leader/set-key
-  "ae" 'evil-ace-jump-word-mode ; ,e for Ace Jump (word)
-  "al" 'evil-ace-jump-line-mode ; ,l for Ace Jump (line)
-  "ac" 'evil-ace-jump-char-mode ; ,x for Ace Jump (char)
-  "as" 'ack-same
-  "ac" 'ack
-  "aa" 'ack-find-same-file
-  "af" 'ack-find-file
+( evil-leader/set-key
+  "ae" 'evil-ace-jump-word-mode		; ,e for Ace Jump (word)
+  ;; "al" 'evil-ace-jump-line-mode		; ,l for Ace Jump (line)
+  ;; "ac" 'evil-ace-jump-char-mode		; ,x for Ace Jump (char)
+  ;; "as" 'ack-same
+  ;; "ac" 'ack
+  ;; "aa" 'ack-find-same-file
+  ;; "af" 'ack-find-file
   "bf" 'beginning-of-defun
   "bu" 'backward-up-list
   "bb" '(lambda () (interactive) (switch-to-buffer nil))
   "ef" 'end-of-defun
   "db" 'sdcv-search-pointer ;; in another buffer
-  "dt" 'sdcv-search-input+ ;; in tip
+  "dt" 'sdcv-search-input+  ;; in tip
   "mf" 'mark-defun
   "em" 'erase-message-buffer
   "eb" 'eval-buffer
@@ -222,7 +228,7 @@ to replace the symbol under cursor"
   "fl" 'cp-filename-line-number-of-current-buffer
   "fn" 'cp-filename-of-current-buffer
   "fp" 'cp-fullpath-of-current-buffer
-  "dj" 'dired-jump ;; open the dired from current file
+  "dj" 'dired-jump	 ;; open the dired from current file
   "ff" 'toggle-full-window ;; I use WIN+F in i3
   "tm" 'get-term
   "px" 'paste-from-x-clipboard
@@ -278,9 +284,9 @@ to replace the symbol under cursor"
   "qq" '(lambda () (interactive) (w3m-search "q" (thing-at-point 'symbol)))
   "gss" 'git-gutter:set-start-revision
   "gsh" '(lambda () (interactive) (git-gutter:set-start-revision "HEAD^")
-           (message "git-gutter:set-start-revision HEAD^"))
+	   (message "git-gutter:set-start-revision HEAD^"))
   "gsr" '(lambda () (interactive) (git-gutter:set-start-revision nil)
-           (message "git-gutter reset")) ;; reset
+	   (message "git-gutter reset")) ;; reset
   "hr" 'helm-recentf
   "di" 'evilmi-delete-items
   "si" 'evilmi-select-items
@@ -404,29 +410,6 @@ to replace the symbol under cursor"
   "xvs" 'git-gutter:stage-hunk
   "xvr" 'git-gutter:revert-hunk
   "xvl" 'vc-print-log
-  "xvb" 'git-messenger:popup-message
-  "xnn" 'narrow-or-widen-dwim
-  "xnw" 'widen
-  "xnd" 'narrow-to-defun
-  "xnr" 'narrow-to-region
-  "xw" 'widen
-  "xd" 'narrow-to-defun
-  "ycr" (lambda () (interactive) (yas-compile-directory (file-truename "~/.emacs.d/snippets")) (yas-reload-all))
-  "zc" 'wg-create-workgroup
-  "zk" 'wg-kill-workgroup
-  "zv" '(lambda (wg)
-          (interactive (list (progn (wg-find-session-file wg-default-session-file)
-                                    (wg-read-workgroup-name))))
-          (wg-switch-to-workgroup wg))
-  "zj" '(lambda (index)
-          (interactive (list (progn (wg-find-session-file wg-default-session-file)
-                                    (wg-read-workgroup-index))))
-          (wg-switch-to-workgroup-at-index index))
-  "zs" '(lambda () (interactive)  (wg-save-session t))
-  "zb" 'wg-switch-to-buffer
-  "zwr" 'wg-redo-wconfig-change
-  "zws" 'wg-save-wconfig
-  "wf" 'popup-which-function
   )
 ;; }}
 
@@ -449,4 +432,9 @@ to replace the symbol under cursor"
 (evilnc-default-hotkeys)
 ;; }}
 
+(global-set-key (kbd "M-j") 'forward-paragraph)
+(global-set-key (kbd "M-k") 'backward-paragraph)
+;; (global-unset-key (kbd "C-z"))
+;; (global-set-key (kbd "C-M-z") 'evil-emacs-state)
+(evil-set-toggle-key "C-M-z")
 (provide 'init-evil)
